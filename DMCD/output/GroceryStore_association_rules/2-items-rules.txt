@@ -1,0 +1,7 @@
+支持度：0.03, 置信度：0.4
+(domestic eggs) -> (whole milk)	confidence:0.47275641025641024
+(root vegetables) -> (other vegetables)	confidence:0.43470149253731344
+(root vegetables) -> (whole milk)	confidence:0.44869402985074625
+(tropical fruit) -> (whole milk)	confidence:0.40310077519379844
+(whipped/sour cream) -> (whole milk)	confidence:0.44964539007092197
+(yogurt) -> (whole milk)	confidence:0.40160349854227406

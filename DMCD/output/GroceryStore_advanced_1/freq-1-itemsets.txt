@@ -1,0 +1,59 @@
+UHT-milk : 329
+beef : 516
+berries : 327
+beverages : 256
+bottled beer : 792
+bottled water : 1087
+brown bread : 638
+butter : 545
+butter milk : 275
+candy : 294
+canned beer : 764
+cat food : 229
+chewing gum : 207
+chicken : 422
+chocolate : 488
+citrus fruit : 814
+coffee : 571
+cream cheese  : 390
+curd : 524
+dessert : 365
+domestic eggs : 624
+frankfurter : 580
+frozen meals : 279
+frozen vegetables : 473
+fruit/vegetable juice : 711
+grapes : 220
+ham : 256
+hamburger meat : 327
+hard cheese : 241
+hygiene articles : 324
+ice cream : 246
+long life bakery product : 368
+margarine : 576
+meat : 254
+misc. beverages : 279
+napkins : 515
+newspapers : 785
+oil : 276
+onions : 305
+other vegetables : 1903
+pastry : 875
+pip fruit : 744
+pork : 567
+rolls/buns : 1809
+root vegetables : 1072
+salty snack : 372
+sausage : 924
+shopping bags : 968
+sliced cheese : 241
+soda : 1715
+specialty bar : 269
+specialty chocolate : 299
+sugar : 333
+tropical fruit : 1032
+waffles : 378
+whipped/sour cream : 705
+white bread : 414
+whole milk : 2513
+yogurt : 1372

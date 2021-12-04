@@ -1,0 +1,3 @@
+CMDLINE /Users/Leisure/opt/anaconda3/envs/gymlab/bin/python apriori_advanced_1.py GroceryStore 0.02 10 0.8
+MEM 0.023438 1636426810.6074
+MEM 14.515625 1636426810.7094

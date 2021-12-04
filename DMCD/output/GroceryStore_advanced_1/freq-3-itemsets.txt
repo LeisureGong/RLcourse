@@ -1,0 +1,2 @@
+other vegetables,root vegetables,whole milk : 228
+other vegetables,whole milk,yogurt : 219

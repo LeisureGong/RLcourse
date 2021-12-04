@@ -1,0 +1,107 @@
+chewing gum: 207
+grapes: 220
+cat food: 229
+hard cheese: 241
+sliced cheese: 241
+ice cream: 246
+meat: 254
+beverages: 256
+ham: 256
+specialty bar: 269
+butter milk: 275
+oil: 276
+misc. beverages: 279
+frozen meals: 279
+candy: 294
+specialty chocolate: 299
+onions: 305
+hygiene articles: 324
+hamburger meat: 327
+berries: 327
+UHT-milk: 329
+sugar: 333
+dessert: 365
+long life bakery product: 368
+salty snack: 372
+waffles: 378
+cream cheese : 390
+white bread: 414
+chicken: 422
+frozen vegetables: 473
+frozen vegetables,whole milk: 201
+chocolate: 488
+napkins: 515
+beef: 516
+beef,whole milk: 209
+curd: 524
+curd,whole milk: 257
+butter,other vegetables: 197
+butter,whole milk: 271
+other vegetables,pork: 213
+pork,whole milk: 218
+coffee: 571
+margarine: 576
+margarine,whole milk: 238
+frankfurter: 580
+frankfurter,whole milk: 202
+domestic eggs,other vegetables: 219
+domestic eggs,whole milk: 295
+brown bread: 638
+brown bread,whole milk: 248
+whipped/sour cream,yogurt: 204
+other vegetables,whipped/sour cream: 284
+whipped/sour cream,whole milk: 317
+fruit/vegetable juice,other vegetables: 207
+fruit/vegetable juice,whole milk: 262
+pip fruit,tropical fruit: 201
+other vegetables,pip fruit: 257
+pip fruit,whole milk: 296
+canned beer: 764
+newspapers: 785
+newspapers,whole milk: 269
+bottled beer: 792
+bottled beer,whole milk: 201
+citrus fruit,tropical fruit: 196
+citrus fruit,yogurt: 213
+citrus fruit,other vegetables: 284
+citrus fruit,whole milk: 300
+pastry,rolls/buns: 206
+pastry,soda: 207
+other vegetables,pastry: 222
+pastry,whole milk: 327
+sausage,soda: 239
+other vegetables,sausage: 265
+sausage,whole milk: 294
+rolls/buns,sausage: 301
+other vegetables,shopping bags: 227
+shopping bags,whole milk: 241
+shopping bags,soda: 242
+soda,tropical fruit: 205
+root vegetables,tropical fruit: 207
+rolls/buns,tropical fruit: 242
+tropical fruit,yogurt: 288
+other vegetables,tropical fruit: 353
+tropical fruit,whole milk: 416
+rolls/buns,root vegetables: 239
+root vegetables,yogurt: 254
+other vegetables,root vegetables: 466
+other vegetables,root vegetables,whole milk: 228
+root vegetables,whole milk: 481
+bottled water,yogurt: 226
+bottled water,rolls/buns: 238
+bottled water,other vegetables: 244
+bottled water,soda: 285
+bottled water,whole milk: 338
+soda,yogurt: 269
+rolls/buns,yogurt: 338
+other vegetables,yogurt: 427
+other vegetables,whole milk,yogurt: 219
+whole milk,yogurt: 551
+other vegetables,soda: 322
+rolls/buns,soda: 377
+soda,whole milk: 394
+other vegetables,rolls/buns: 419
+rolls/buns,whole milk: 557
+other vegetables: 1903
+other vegetables,whole milk: 736
+whole milk: 2513
