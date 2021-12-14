@@ -70,6 +70,6 @@ if __name__ == "__main__":
             os.mkdir(subdir)
 
         generate_samples(
-            n_samples=200,
+            n_samples=10,
             split=split
         )
