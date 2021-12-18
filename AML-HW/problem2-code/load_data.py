@@ -6,7 +6,7 @@ from collections import Counter
 
 
 def load_images(split):
-    subdir = os.path.join("figs", split)
+    subdir = os.path.join("figs1", split)
 
     xs = []
     ys = []
@@ -17,6 +17,7 @@ def load_images(split):
             fpath = os.path.join(subdir, fname)
 
             img = Image.open(fpath).resize((32, 32))
+            img = img.convert('L')
             arr = np.array(img) / 255.0 - 0.5  # [-0.5, 0.5]
 
             xs.append(arr)

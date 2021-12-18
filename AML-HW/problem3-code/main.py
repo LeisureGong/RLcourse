@@ -33,7 +33,6 @@ def main():
             obs = obs_next
             if done:
                 list_path.append(obs)
-                print(list_path)
                 obs = envs.reset()
                 list_path.clear()
         print("第" + str(i+1) + "轮训练over")

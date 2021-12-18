@@ -5,14 +5,7 @@
       <paths name="gonglei@210.28.135.53:22 password">
         <serverdata>
           <mappings>
-            <mapping deploy="/tmp/pycharm_project_654" local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="km53">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/RLcourse" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/PyCharm/RLcourse" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

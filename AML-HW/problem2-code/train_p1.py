@@ -62,25 +62,24 @@ if __name__ == "__main__":
     train_accs = []
     test_accs = []
     for algo in ["LR", "DT", "RF", "NN"]:
-        for pca_dim in [None, 1000, 500, 200, 50]:
+        for pca_dim in [None, 1]:
             train_acc, test_acc = train(algo, pca_dim)
             train_accs.append(train_acc)
             test_accs.append(test_acc)
-
-    train_accs = np.array(train_accs).reshape(4, 5)
-    test_accs = np.array(test_accs).reshape(4, 5)
+    train_accs = np.array(train_accs).reshape(4, 2)
+    test_accs = np.array(test_accs).reshape(4, 2)
 
     fig = plt.figure(figsize=(10, 4))
     plt.subplot(1, 2, 1)
     ax = plt.gca()
     plt.imshow(train_accs)
 
-    for i in range(5):
+    for i in range(2):
         for j in range(4):
             ax.text(i, j, "{:.1f}".format(train_accs[j][i] * 100.0))
 
-    ax.set_xticks(range(5))
-    ax.set_xticklabels(["None", "1000", "500", "200", "50"])
+    ax.set_xticks(range(2))
+    ax.set_xticklabels(["None", "1"])
     ax.set_yticks(range(4))
     ax.set_yticklabels(["LR", "DT", "RF","NN"])
     ax.set_title("Train Acc")
@@ -89,12 +88,12 @@ if __name__ == "__main__":
     ax = plt.gca()
     plt.imshow(test_accs)
 
-    for i in range(5):
+    for i in range(2):
         for j in range(4):
             ax.text(i, j, "{:.1f}".format(test_accs[j][i] * 100.0))
 
-    ax.set_xticks(range(5))
-    ax.set_xticklabels(["None", "1000", "500", "200", "50"])
+    ax.set_xticks(range(2))
+    ax.set_xticklabels(["None", "1"])
     ax.set_yticks(range(4))
     ax.set_yticklabels(["LR", "DT", "RF", "NN"])
     ax.set_title("Test Acc")

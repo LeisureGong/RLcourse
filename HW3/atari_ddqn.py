@@ -11,6 +11,7 @@ from core.util import get_class_attr_val
 from model import CnnDQN
 from trainer import Trainer
 import numpy as np
+import torch.nn.functional as tnf
 
 class CnnDDQNAgent:
     def __init__(self, config: Config):
@@ -20,8 +21,8 @@ class CnnDDQNAgent:
         self.model = CnnDQN(self.config.state_shape, self.config.action_dim)
         self.target_model = CnnDQN(self.config.state_shape, self.config.action_dim)
         self.target_model.load_state_dict(self.model.state_dict())
-        self.model_optim = torch.optim.RMSprop(self.model.parameters(), lr=self.config.learning_rate,
-                                               eps=1e-5, weight_decay=0.95, momentum=0, centered=True)
+        self.model_optim = torch.optim.Adam(self.model.parameters(), lr=self.config.learning_rate,
+                                               eps=1e-5, weight_decay=0.95)
 
         if self.config.use_cuda:
             self.cuda()
@@ -51,13 +52,26 @@ class CnnDDQNAgent:
         # q_values is a vector with size (batch_size, action_shape, 1)
         # each dimension i represents Q(s0,a_i)
         q_values = self.model(s0).cuda()
+        next_q_values = self.model(s1).cuda()
 
         # How to calculate argmax_a Q(s,a)
-        actions = q_values.max(1)[1]
+        # actions = q_values.max(1)[1]
 
         # Tips: function torch.gather may be helpful
         # You need to design how to calculate the loss
-        loss = 0
+        # 在PyTorch官网DQN页面的代码中，是这样获取Q的
+        # Compute Q(s_t, a) - the model computes Q(s_t), then we select the
+        # columns of actions taken. These are the actions which would've been taken
+        # for each batch state according to policy_net
+        # state_action_values = policy_net(state_batch).gather(1, action_batch)
+        state_action_values = q_values.gather(1, a)
+        with torch.no_grad():
+            if self.config.double_dqn:
+                next_state_values = self.target_model(s1).gather(1, torch.max(next_q_values, 1)[1].unsqueeze(1))
+            else:
+                next_state_values = self.target_model(s1).max(1)[0].unsqueeze(1)
+            expect_state_action_values = r +  self.config.gamma * (1 - done) * next_state_values
+        loss = tnf.smooth_l1_loss(state_action_values, expect_state_action_values.unsqueeze(1))
 
         self.model_optim.zero_grad()
         loss.backward()
@@ -128,9 +142,9 @@ if __name__ == '__main__':
     config.eps_decay = 30000
     config.frames = 2000000
     config.use_cuda = args.cuda
-    config.learning_rate = 1e-6
+    config.learning_rate = 1e-4
     config.init_buff = 10000
-    config.max_buff = 100000
+    config.max_buff = 10000
     config.learning_interval = 4
     config.update_tar_interval = 1000
     config.batch_size = 32
@@ -141,7 +155,8 @@ if __name__ == '__main__':
     config.checkpoint_interval = 500000
     config.win_reward = 18
     config.win_break = True
-    config.device = torch.device("cuda: "+args.cuda_id if args.cuda else "cpu")
+    config.device = torch.device("cuda:" + args.cuda_id if args.cuda else "cpu")
+    config.double_dqn = True
     # handle the atari env
     env = make_atari(config.env)
     env = wrap_deepmind(env)

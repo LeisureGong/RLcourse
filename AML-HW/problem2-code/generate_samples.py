@@ -60,8 +60,8 @@ def generate_samples(n_samples, split):
 
 if __name__ == "__main__":
     # generate train/test data
-    if not os.path.exists("./figs"):
-        os.mkdir("./figs")
+    if not os.path.exists("figs"):
+        os.mkdir("figs")
 
     for split in ["train", "test"]:
         subdir = os.path.join("figs", split)
@@ -70,6 +70,6 @@ if __name__ == "__main__":
             os.mkdir(subdir)
 
         generate_samples(
-            n_samples=10,
+            n_samples=50,
             split=split
         )

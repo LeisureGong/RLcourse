@@ -53,6 +53,7 @@ class Trainer:
 
             loss = 0
             if fr > self.config.init_buff and fr % self.config.learning_interval==0:
+                print(fr)
                 loss = self.agent.learning(fr)
                 losses.append(loss)
                 self.board_logger.scalar_summary('Loss per frame', fr, loss)
