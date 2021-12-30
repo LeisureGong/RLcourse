@@ -1,0 +1,8 @@
+{
+  "model_path": "output/model/",
+  "data_dir": "data/",
+  "train_csv": "data/train.csv",
+  "valid_csv": "data/test.csv",
+  "train_feature_file": "output/features_file/train",
+  "valid_feature_file": "output/features_file/valid"
+}
