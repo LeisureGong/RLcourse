@@ -5,7 +5,6 @@ from sklearn.metrics import accuracy_score
 import time
 from lightgbm import LGBMClassifier
 from xgboost import XGBClassifier
-
 print('make classification ...')
 X,y = make_classification(n_samples=1000000,
                          n_features=50,

@@ -68,16 +68,16 @@ if __name__ == '__main__':
     trainfile = 'output/features_file/train'
     valid_file = 'output/features_file/valid'
     cut_str = '1-11_13-end'
-    learning_rate = 0.08
-    modelfile = '%s/GBDT-%s-%s.model.pickle' % (model_path, cut_str, learning_rate)
-    output_prediction = '%s/GBDT-%s-%s.predictions' % (model_path, cut_str, learning_rate)
+    learning_rate = 0.8
+    modelfile = '%s/GB-%s-%s.model.pickle' % (model_path, cut_str, learning_rate)
+    output_prediction = '%s/GB-%s-%s.predictions' % (model_path, cut_str, learning_rate)
     # print valid_file, modelfile, output_prediction
 
     predictions = run_clf_main(valid_file, modelfile, cut_str)
     with open(output_prediction, 'w') as fp:
         for pred in predictions:
             fp.write(str(pred) + "\n" )
-    output_real_name = '%s/GBDT-%s-%s.csv' % (model_path, cut_str, learning_rate)
+    output_real_name = '%s/GB-%s-%s.csv' % (model_path, cut_str, learning_rate)
 
     with open(output_real_name, "w") as f:
         f.write("Id,Expected\n")

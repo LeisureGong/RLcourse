@@ -48,7 +48,7 @@ if __name__ == "__main__":
     # args = parser.parse_args()
     # train_csv, valid_csv, data_dir, train_outfile, valid_outfile = parser_json(args.setting_json)
     train_csv = 'data/train.csv'
-    valid_csv = 'data/test.csv'
+    valid_csv = 'data/test2.csv'
     data_dir = 'data/'
     train_outfile = 'output/features_file/train'
     valid_outfile = 'output/features_file/valid'

@@ -1,12 +1,10 @@
 import numpy as np
-import random
-from abc import abstractmethod
-import tensorflow as tf
 from collections import defaultdict
+import random
+
+from abc import abstractmethod
 import tensorflow.compat.v1 as tf
-
 tf.disable_v2_behavior()
-
 
 class QAgent:
     def __init__(self, ):
@@ -17,43 +15,43 @@ class QAgent:
         pass
 
 
-class _QAgent:
-    def __init__(self, actions):
-        self.actions = actions
-        # 学习率
-        self.learning_rate = 0.4
-        # 奖励递减值
-        self.discount_factor = 0.9
-        self.q_table = defaultdict(lambda: [0.0, 0.0, 0.0, 0.0])
-
-        # 采样，更新QTable
-
-    def learn(self, state, action, reward, next_state):
-        state = str(state.tolist())
-        next_state = str(next_state.tolist())
-        q_predict = self.q_table[state][action]
-        q_new = reward + self.discount_factor * max(self.q_table[next_state])
-        self.q_table[state][action] += self.learning_rate * (q_new - q_predict)
-
-    def select_action(self, state):
-        state = str(state.tolist())
-        state_action = self.q_table[state]
-        action = self.select_max_reward(state_action)
-        return action
-
-    # 选择所有状态中，回报最大的action
-    @staticmethod
-    def select_max_reward(state_action):
-        max_index_list = []
-        max_value = state_action[0]
-        for index, value in enumerate(state_action):
-            if value > max_value:
-                max_index_list.clear()
-                max_value = value
-                max_index_list.append(index)
-            elif value == max_value:
-                max_index_list.append(index)
-        return random.choice(max_index_list)
+class MyQAgent(QAgent):
+    def __init__(self):
+        super(QAgent, self).__init__()
+        # init your model
+        self.discount_factor = 0.99
+        self.learning_rate = 0.1
+        self.qtable = defaultdict(lambda: [0.0, 0.0, 0.0, 0.0])
+    
+    def select_action(self, state_pos):
+        state = " ".join([str(int(x)) for x in state_pos])
+        candidate_actions = self.qtable[state]
+        Max = candidate_actions[0]
+        max_index = []
+        for index, value in enumerate(candidate_actions):
+            if value > Max:
+                Max = value
+                max_index.clear()
+                max_index.append(index)
+            elif value == Max:
+                max_index.append(index)
+        return random.choice(max_index)
+        
+    def learn(self, state_pos, action, reward, next_state_pos, done):
+        state = " ".join([str(int(x)) for x in state_pos])
+        next_state = " ".join([str(int(x)) for x in next_state_pos])
+        new_value = reward + (1 - done) * self.discount_factor * max(self.qtable[next_state])
+        self.qtable[state][action] += self.learning_rate * (new_value - self.qtable[state][action])
+        self.qtable[state][action] = np.clip(self.qtable[state][action], -100, 100)
+'''
+    def get_policy(self):
+		grid = np.zeros((8, 8), dtype=int)
+		for index, state in enumerate(self.qtable):
+			state_pos = [int(x) for x in state.split(" ")]
+			optimal_action = self.select_action(state_pos)
+			grid[state_pos[0]][state_pos[1]] = optimal_action+1
+		print(grid)
+'''
 
 
 class Model:
@@ -75,15 +73,11 @@ class Model:
     def sample_action(self, s):
         pass
 
-    @abstractmethod
-    def predict(self, s, a):
-        pass
-
-
 class DynaModel(Model):
     def __init__(self, width, height, policy):
         Model.__init__(self, width, height, policy)
         self.transitions = defaultdict(lambda: ["", "", "", ""])
+        pass
 
     def store_transition(self, s, a, r, s_):
         state = " ".join([str(int(x)) for x in s])
@@ -92,7 +86,7 @@ class DynaModel(Model):
 
     def sample_state(self):
         states = list(self.transitions.keys())
-        idx = random.randint(0, len(states) - 1)
+        idx = random.randint(0,len(states)-1)
         state = [int(x) for x in states[idx].split(" ")]
         return np.array(state), idx
 
@@ -145,8 +139,10 @@ class NetworkModel(Model):
         s = self.norm_s(s)
         s_ = self.norm_s(s_)
         self.buffer.append([s, a, r, s_])
+        '''
         if s[-1] - s_[-1] != 0:
             self.sensitive_index.append(len(self.buffer) - 1)
+        '''
 
     def train_transition(self, batch_size):
         s_list = []
@@ -160,8 +156,18 @@ class NetworkModel(Model):
             a_list.append([a])
             r_list.append(r)
             s_next_list.append(s_)
-
-        x_mse = self.sess.run([self.x_mse, self.opt_x], feed_dict={
+        '''
+        if len(self.sensitive_index) > 0:
+            for _ in range(batch_size):
+                idx = np.random.randint(0, len(self.sensitive_index))
+                idx = self.sensitive_index[idx]
+                s, a, r, s_ = self.buffer[idx]
+                s_list.append(s)
+                a_list.append([a])
+                r_list.append(r)
+                s_next_list.append(s_)
+        '''
+        x_mse = self.sess.run([self.x_mse,  self.opt_x], feed_dict={
             self.x_ph: s_list, self.a_ph: a_list, self.x_next_ph: s_next_list
         })[:1]
         return x_mse
@@ -170,9 +176,6 @@ class NetworkModel(Model):
         idx = np.random.randint(0, len(self.buffer))
         s, a, r, s_ = self.buffer[idx]
         return self.de_norm_s(s), idx
-
-    def sample_action(self, s):
-        return self.policy.select_action(s)
 
     def predict(self, s, a):
         s_ = self.sess.run(self.next_x, feed_dict={self.x_ph: [s], self.a_ph: [[a]]})

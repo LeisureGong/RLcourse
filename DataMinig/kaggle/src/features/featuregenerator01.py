@@ -7,8 +7,6 @@ feature1: trick1
 feature2: author 在 this paper发表的年份曾经发表的论文个数
 feature3: 作者发表在journal的论文个数
 feature4: 作者发表在conference的论文个数
-feature5: <authorid jid>个数/authorid journal的个数
-feature6: <authorid cid>个数/authorid conference的个数
 '''
 
 
@@ -17,12 +15,6 @@ class featuregenerator01:
         self.data = data
         self.logger = logutil()
         self.generate_intermediate_data()
-
-    '''
-    Description: Generate the Intermedia feature data 
-    Parameter: None
-    Return: None
-    '''
 
     def generate_intermediate_data(self):
         authorid_year_num = ddict(lambda: ddict(int))
@@ -33,7 +25,8 @@ class featuregenerator01:
         authorid_paperid_sum = dict()
 
         cal_authorid_set = set()
-        for authorid, paperid, rate in self.data.train_tuples:
+        # hanhan就是我
+        for authorid, paperid, rate in self.data.train_tuples + self.data.valid_tuples:
             authorid_paperid_sum[(authorid, paperid)] = 0
             cal_authorid_set.add(authorid)
 
@@ -83,11 +76,11 @@ class featuregenerator01:
             if jid != 0:
                 aid_jid_sum = self.authorid_jid_num[authorid][jid]
 
-            aid_cid_conference_ratio = 0
-            if conference_sum > 0:
-                aid_cid_conference_ratio = float(aid_cid_sum) / conference_sum
-            aid_jid_journal_ratio = 0
-            if journal_sum > 0:
-                aid_jid_journal_ratio = float(aid_jid_sum) / journal_sum
+            # aid_cid_conference_ratio = 0
+            # if conference_sum > 0:
+            #     aid_cid_conference_ratio = float(aid_cid_sum) / conference_sum
+            # aid_jid_journal_ratio = 0
+            # if journal_sum > 0:
+            #     aid_jid_journal_ratio = float(aid_jid_sum) / journal_sum
 
         return [self.authorid_paperid_sum.get((authorid, paperid), 0), year_sum, conference_sum, journal_sum]

@@ -21,20 +21,15 @@ def get_args():
     parser.add_argument(
         '--num-frames',
         type=int,
-        default=10000)
+        default=7000)
     parser.add_argument(
         '--info',
         type=str,
         default='')
     parser.add_argument(
-        '--dynaq',
-        action="store_false",
-        help="is training state or not")
-    parser.add_argument(
-        '--n',
-        type=int,
-        default=1000
-    )
+        '--dyna',
+        type=bool,
+        default=True)
     parser.add_argument(
         '--s',
         type=int,
@@ -42,13 +37,15 @@ def get_args():
     parser.add_argument(
         '--h',
         type=int,
-        default=10
-    )
+        default=10)
     parser.add_argument(
         '--m',
         type=int,
-        default=500
-    )
+        default=1000)
+    parser.add_argument(
+        '--n',
+        type=int,
+        default=100)
     ## other parameter
     parser.add_argument(
         '--log-interval',

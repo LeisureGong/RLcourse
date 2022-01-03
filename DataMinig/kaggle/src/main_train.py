@@ -1,6 +1,9 @@
 from sklearn.ensemble import *
 import pickle
-import argparse
+from xgboost import XGBClassifier
+from lightgbm import LGBMClassifier
+import numpy as np
+from sklearn.neighbors import KNeighborsClassifier
 
 
 def parser_feature_select_str(st):
@@ -42,17 +45,26 @@ def load_ins_file(ins_file, feature_select_str):
 
 
 def get_classifier(lr):
-    return GradientBoostingClassifier(learning_rate=lr, n_estimators=400, max_depth=4, min_samples_split=20,
+    # return KNeighborsClassifier(n_neighbors=300)
+    # return RandomForestClassifier(n_estimators=600, max_depth=4, min_samples_split=20,
+    #                               random_state=1)
+    # return LGBMClassifier(learning_rate=lr, n_estimators=600)
+    # return xgb.XGBClassifier(objective='reg:linear', learning_rate=lr, n_estimators=400, max_depth=4,
+    #                          subsample=0.8, colsample_bytree=0.8, scale_pos_weight=1)
+    return GradientBoostingClassifier(learning_rate=lr, n_estimators=600, max_depth=4, min_samples_split=20,
                                       random_state=1)
 
 
 def run_clf_main(train_file, model_file, cut_str, learning_rate):
     train_x, train_y = load_ins_file(train_file, cut_str)
     clf = get_classifier(learning_rate)
+    # train_x = xgb.DMatrix(np.array(train_x))
+    # train_y = xgb.DMatrix(np.array(train_y))
     clf.fit(train_x, train_y)
     # 保存模型文件
     with open(model_file, 'wb+') as f:
         pickle.dump(clf, f)
+
 
 def parser_json(setting_json):
     import json
@@ -72,7 +84,7 @@ if __name__ == '__main__':
     model_path = 'output/model/'
     trainfile = 'output/features_file/train'
     cut_str = '1-11_13-end'
-    learning_rate = 0.08
-    out_model = '%s/GBDT-%s-%s.model.pickle' % (model_path, cut_str, learning_rate)
+    learning_rate = 0.8
+    out_model = '%s/GB-%s-%s.model.pickle' % (model_path, cut_str, learning_rate)
 
     run_clf_main(trainfile, out_model, cut_str, float(learning_rate))
